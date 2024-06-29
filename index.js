@@ -4,6 +4,7 @@ const envEnvConfig = require("./nodeEnvConfig");
 envEnvConfig.envEnvConfig();
 const app = express();
 const allowedOrigins = ["http://localhost:3000", "http://localhost:4000"];
+app.use(express.static("uploads"))
 const taskRouter = require("./router/taskRouter");
 app.use(
   cors({

@@ -59,12 +59,12 @@ const updateTaskListService = async (req, res, next) => {
       });
 
       if (duplicateTask?.length > 0) {
-        updateQuery += `update tasks set is_active='0' where id NOT IN ('${duplicateTask.join(
+        updateQuery += `UPDATE tasks SET is_active='0' WHERE id NOT IN (${duplicateTask.join(
           ","
-        )}');`;
+        )});`;
       }
       let query = updateQuery + insertQuery;
-      console.log(query)
+      console.log(query);
       let result = await mysqlQueryExecution(query);
       if (result) {
         return {

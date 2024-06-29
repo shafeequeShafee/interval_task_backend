@@ -16,36 +16,3 @@ CREATE TABLE tasks (
 
 
 
-CREATE DATABASE tasks_db;
-USE tasks_db;
-
-CREATE TABLE tasksTest (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    heading VARCHAR(255) ,
-    description TEXT,
-    date DATE,
-    time TIME,
-    image VARCHAR(255),
-    priority ENUM('low', 'medium', 'high'),
-    is_active TINYINT(1) DEFAULT 1,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-ALTER TABLE tasks
-MODIFY COLUMN heading VARCHAR(255);
-
-SELECT * FROM tasks;
-
-INSERT INTO tasks (heading, description, date, time, image, priority) 
-VALUES ('Sample Task', 'This is a description of the sample task.', '2024-06-29', '14:30:00', 'sample_image.jpg', 'medium');
-
-ALTER TABLE tasks
-ADD COLUMN is_active TINYINT(1) DEFAULT 1;
-
-
-
-select * from tasks where is_active=1
-
-
-
-

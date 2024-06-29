@@ -12,3 +12,6 @@ CREATE TABLE tasks (
     priority ENUM('low', 'medium', 'high') NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+ALTER TABLE tasks
+ADD COLUMN isActive TINYINT(1) DEFAULT 1;

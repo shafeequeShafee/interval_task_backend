@@ -1,26 +1,40 @@
-const { error } = require("console")
 const {
-    getAllTaskService
-} =require("../service/taskControllerService")
+  getAllTaskService,
+  updateTaskListService,
+} = require("../service/taskControllerService");
 
-const getAllTask =async(req,res,next)=>{
-    try{
-        let updated=await getAllTaskService(req,res,next) 
-        if(updated){
-            return res.status(200).json({
-               status:200,
-               message:"Successfully updated.", 
-               error:false
-            })
-        }
-      
+const getAllTask = async (req, res, next) => {
+  try {
+    let result = await getAllTaskService(req, res, next);
+    if (result) {
+      return res.status(200).json({
+        status: 200,
+        message: "Successfully updated.",
+        response: result,
+        error: false,
+      });
     }
-    catch(error){
-        next(error)
+  } catch (error) {
+    next(error);
+  }
+};
+
+const updateTaskList = async (req, res, next) => {
+  try {
+    let updated = await updateTaskListService(req, res, next);
+    if (updated) {
+      return res.status(200).json({
+        status: 200,
+        message: "Successfully updated.",
+        error: false,
+      });
     }
+  } catch (error) {
+    next(error);
+  }
+};
 
-}
-
-module.exports={
-    getAllTask
-}
+module.exports = {
+  getAllTask,
+  updateTaskList,
+};

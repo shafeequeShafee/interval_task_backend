@@ -25,6 +25,7 @@ const getAllTaskService = async (req, res, next) => {
 const updateTaskListService = async (req, res, next) => {
   try {
     let taskItems = req.body;
+    console.log(taskItems);
     if (taskItems?.length > 0) {
       let updateQuery = "";
       let insertQuery = "";
@@ -64,7 +65,6 @@ const updateTaskListService = async (req, res, next) => {
         )});`;
       }
       let query = updateQuery + insertQuery;
-      console.log(query);
       let result = await mysqlQueryExecution(query);
       if (result) {
         return {

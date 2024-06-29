@@ -9,7 +9,7 @@ const getAllTask = async (req, res, next) => {
     if (result) {
       return res.status(200).json({
         status: 200,
-        message: "Successfully updated.",
+        message: "Successfully fetched.",
         response: result,
         error: false,
       });

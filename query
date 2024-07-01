@@ -10,9 +10,10 @@ CREATE TABLE tasks (
     time TIME,
     image VARCHAR(255),
     priority ENUM('low', 'medium', 'high'), 
-    is_active
+    is_active VARCHAR(1) DEFAULT '1',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
 
 
 

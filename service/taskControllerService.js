@@ -1,5 +1,6 @@
 const { query, response } = require("express");
 const mysqlConnection = require("../config/mysqlConnection");
+const axios = require("axios");
 
 const mysqlQueryExecution = (query) => {
   return new Promise((resolve, reject) => {
@@ -101,7 +102,57 @@ const updateTaskListService = async (req, res, next) => {
   }
 };
 
+const nonBlockingApiService = async (req, res, next) => {
+  try {
+    let result = [
+      {
+        name: "sfq",
+        age: 27,
+        job: "software engineer",
+        message: "non-blocking api",
+      },
+    ];
+    return result;
+  } catch (err) {
+    next(err);
+  }
+};
+
+const blockingApiApiService = async (req, res, next) => {
+  try {
+    const now = new Date().getTime();
+    while (new Date().getTime() < now + 10000) {}
+    let result = [
+      {
+        name: "sfq",
+        age: 27,
+        job: "software engineer",
+        message: "blocking api",
+      },
+    ];
+    return result;
+  } catch (err) {
+    next(err);
+  }
+};
+
+const nonBlockingJsonService = async (req, res, next) => {
+  try {
+
+    let result = await axios.get(
+      "https://jsonplaceholder.typicode.com/todos/1"
+    );
+    
+    return result.data;
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   getAllTaskService,
   updateTaskListService,
+  nonBlockingApiService,
+  blockingApiApiService,
+  nonBlockingJsonService,
 };

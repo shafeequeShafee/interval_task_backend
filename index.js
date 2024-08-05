@@ -4,7 +4,7 @@ const envEnvConfig = require("./nodeEnvConfig");
 envEnvConfig.envEnvConfig();
 const app = express();
 const allowedOrigins = ["http://localhost:3000", "http://localhost:4000"];
-app.use(express.static("uploads"))
+app.use(express.static("uploads"));
 const taskRouter = require("./router/taskRouter");
 app.use(
   cors({
@@ -20,25 +20,31 @@ app.use(
 );
 //(req,res)=>{} request handler , request object, resoponse object
 //("/")=> router or endpoint
-app.get("/",(req,res)=>{
-   res.status(200).send("hii")
-})
+app.get("/", (req, res) => {
+  res.status(200).send("hii");
+});
 
-/// route parameter
-app.get("/api/user/:id/:username",(req,res)=>{
-    console.log(req.params)
-    let parsedId =req.params?.id
-    if(isNaN(parsedId)){
-      return req.status(400).send({
-        msg:"bad request"
-      })
-    }
-    /// do other operation
-    // req.status(404) => no data found 
-    // req.status(200) => OK success
+////////  => route parameter
+//=> /api/user/5/sfq
+app.get("/api/user/:id/:username", (req, res) => {
+  console.log(req.params);
+  let parsedId = req.params?.id;
+  if (isNaN(parsedId)) {
+    return req.status(400).send({
+      msg: "bad request",
+    });
+  }
+  /// do other operation
+  // req.status(404) => no data found
+  // req.status(200) => OK success
+});
 
-})
-//
+///////// => query parameter
+// => /api/products?keyOne=valueOne&&keyTwo=valueTwo
+app.get("/api/products", (req, res) => {
+  console.log(req.query?.keyOne, req.query?.keyTwo);
+});
+app.get;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/task-router", taskRouter);

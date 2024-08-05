@@ -1,0 +1,51 @@
+1)Node.js is designed to be highly efficient and capable of handling many concurrent
+operations without requiring multiple threads. It achieves this through an event-driven,
+non-blocking I/O model.
+
+2)Node.js operates on a single-threaded event loop, meaning there is one main thread that
+handles all the operations.However, it can handle multiple I/O operations concurrently without waiting for any of them to complete before moving on to the next one. This is what makes Node.js efficient and scalable.
+
+3)Event Loop :The event loop is the core mechanism that allows Node.js to perform non-blocking I/O operations.
+
+#)Call Stack: This is where the execution context (or function calls) are stacked and processed one by one.
+#)Callback Queue (Event Queue): This is where asynchronous callbacks are queued to be executed once the call stack is empty.
+#)Event Loop: This is a mechanism that checks the call stack and the callback queue. If the call stack is empty, it pushes the first callback from the callback queue to the call stack for execution.
+#)Node.js APIs (or Web APIs in browser context): These are the mechanisms that handle asynchronous operations (e.g., setTimeout, fs.readFile, axios.get).
+
+////////////////////
+#)Event Queue: All incoming requests and events are placed in an event queue.
+#)Event Loop: The event loop continuously checks the event queue and processes each event one by one.
+#)I/O Operations: For I/O operations (like reading from a file, making a network request, etc.), Node.js delegates these tasks to the system's I/O operations (which may use multiple threads internally) and attaches a callback function.
+#)Callbacks: Once the I/O operation is complete, the callback is placed back into the event queue to be processed by the event loop.
+////////////////////
+
+Call Stack:The call stack operates in a Last-In-First-Out (LIFO) order, meaning the last function that was added to the stack is the first one to be executed and removed.
+
+Callback Queue:The callback queue operates in a First-In-First-Out (FIFO) order, meaning callbacks are processed in the order they were added to the queue.
+
+Non-blocking I/O in Express.js
+
+const express = require('express');
+const fs = require('fs');
+const app = express();
+
+app.get('/', (req, res) => {
+  // Start reading a file (non-blocking I/O operation)
+  fs.readFile('example.txt', 'utf8', (err, data) => {
+    if (err) {
+      res.status(500).send('Error reading file');
+      return;
+    }
+    // Send the file content as the response
+    res.send(data);
+  });
+
+  // This line runs immediately after initiating the readFile operation
+  console.log('File read initiated');
+});
+
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+

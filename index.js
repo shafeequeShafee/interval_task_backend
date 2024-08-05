@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require("express"); //
 const cors = require("cors");
 const envEnvConfig = require("./nodeEnvConfig");
 envEnvConfig.envEnvConfig();
@@ -18,6 +18,27 @@ app.use(
     },
   })
 );
+//(req,res)=>{} request handler , request object, resoponse object
+//("/")=> router or endpoint
+app.get("/",(req,res)=>{
+   res.status(200).send("hii")
+})
+
+/// route parameter
+app.get("/api/user/:id/:username",(req,res)=>{
+    console.log(req.params)
+    let parsedId =req.params?.id
+    if(isNaN(parsedId)){
+      return req.status(400).send({
+        msg:"bad request"
+      })
+    }
+    /// do other operation
+    // req.status(404) => no data found 
+    // req.status(200) => OK success
+
+})
+//
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/task-router", taskRouter);

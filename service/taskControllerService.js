@@ -1,6 +1,8 @@
 const { query, response } = require("express");
 const mysqlConnection = require("../config/mysqlConnection");
 const axios = require("axios");
+const path = require("path");
+const { Worker } = require("worker_threads");
 
 const mysqlQueryExecution = (query) => {
   return new Promise((resolve, reject) => {
@@ -138,12 +140,37 @@ const blockingApiApiService = async (req, res, next) => {
 
 const nonBlockingJsonService = async (req, res, next) => {
   try {
-
     let result = await axios.get(
       "https://jsonplaceholder.typicode.com/todos/1"
     );
-    
+
     return result.data;
+  } catch (err) {
+    next(err);
+  }
+};
+
+const blockingApiConvertedService = async (req, res, next) => {
+  try {
+    const worker = new Worker(
+      path.join(__dirname, "..", "worker", "worker.js")
+    );
+
+    worker.on("message", (result) => {
+      return res.send(result);
+    });
+
+    worker.on("error", (err) => {
+      next(err);
+    });
+
+    worker.on("exit", (code) => {
+      if (code !== 0) {
+        next(new Error(`Worker stopped with exit code ${code}`));
+      }
+    });
+
+    worker.postMessage("start");
   } catch (err) {
     next(err);
   }
@@ -155,4 +182,5 @@ module.exports = {
   nonBlockingApiService,
   blockingApiApiService,
   nonBlockingJsonService,
+  blockingApiConvertedService,
 };

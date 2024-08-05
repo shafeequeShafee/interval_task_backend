@@ -1,0 +1,21 @@
+Event Loop
+//////////////
+1)Javascript is sychronous, blocking , single-threaded language.
+2)To make async programming possible, we need help of libuv
+3)varriables and methods declare cheyumbol memory allocate cheyunnath (store cheyuunnath) heap-memory' ilannu , 
+   ath execute cheyunnath 'call stack' laannu
+4)  call stack  => LIFO
+5)Libuv and Web API are not the same in Node.js, although they both 
+  play crucial roles in handling asynchronous operations.
+6)Libuv
+ Libuv is a multi-platform support library with a focus on asynchronous I/O. 
+  It is one of the key components that enables Node.js to perform non-blocking I/O operations.
+
+  Event Loop: Manages the event-driven architecture of Node.js.
+  Thread Pool: Handles tasks that cannot be performed asynchronously by the OS (e.g., file system operations).
+  Asynchronous I/O: Provides APIs for file system, networking, and other asynchronous I/O operations.
+  Timers: Manages setTimeout, setInterval, and other timer functions.
+
+  Libuv in Node.js: Manages the event loop and provides non-blocking I/O operations, timer management, and other utilities essential for the asynchronous nature of Node.js.
+  Web APIs in Browsers: Provide asynchronous capabilities such as HTTP requests, DOM event handling, and timers. These APIs interact with the browser's event loop to handle asynchronous operations on the client-side.
+

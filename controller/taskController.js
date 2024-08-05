@@ -3,7 +3,8 @@ const {
   updateTaskListService,
   nonBlockingApiService,
   blockingApiApiService,
-  nonBlockingJsonService
+  nonBlockingJsonService,
+  blockingApiConvertedService
 } = require("../service/taskControllerService");
 
 const getAllTask = async (req, res, next) => {
@@ -86,10 +87,27 @@ const nonBlockingJson = async (req, res, next) => {
   }
 };
 
+const blockingApiConverted = async (req, res, next) => {
+  try {
+    let result = await blockingApiConvertedService(req, res, next);
+    if (result) {
+      return res.status(200).json({
+        status: 200,
+        message: "Successfully fetched the data",
+        error: false,
+        response:result
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getAllTask,
   updateTaskList,
   nonBlockingApi,
   blockingApi,
-  nonBlockingJson
+  nonBlockingJson,
+  blockingApiConverted
 };

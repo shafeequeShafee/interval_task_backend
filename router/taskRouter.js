@@ -7,6 +7,8 @@ taskRouter.get("/get-all-task", taskController.getAllTask);
 taskRouter.post("/update-task-list", taskController.updateTaskList);
 taskRouter.get("/non-blocking-api", taskController.nonBlockingApi);
 taskRouter.get("/blocking-api", taskController.blockingApi);
+
+taskRouter.get("/blocking-api-converted", taskController.blockingApiConverted);
 taskRouter.get("/non-blocking-json-server", taskController.nonBlockingJson);
 
 module.exports = taskRouter;
